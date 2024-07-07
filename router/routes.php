@@ -25,4 +25,8 @@ $routes = [
         'controller' => 'AuthController@register',
         'middleware' => 'guest' 
     ],
+    '/create/cliente' => [
+          'controller' => 'ClienteController@create',
+          'middleware'=>'auth'
+    ]
 ];

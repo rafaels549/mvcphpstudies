@@ -33,8 +33,13 @@ class AuthController extends RenderView {
         if (!password_verify($senha, $result['data'][0]->password)) {
             $this->error(401, 'Email ou senha inválidos');
         }
-
-        $_SESSION["usuario"] = $result['data'][0];
+        $usuario = (object) [
+            'id' => $result['data'][0]->id,
+            'name' => $result['data'][0]->name,
+            'email' => $result['data'][0]->email,
+            
+        ];
+        $_SESSION["usuario"] = $usuario;
         echo json_encode(['success' => true]);
         exit;
     }
@@ -67,15 +72,23 @@ class AuthController extends RenderView {
             $this->error(400, 'Email já cadastrado');
         }
 
+        
+
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-        $result = $userModel->createUser($username,$name, $email, $senhaHash); 
+         $userModel->createUser($username,$name, $email, $senhaHash); 
+         $result = $userModel->findByEmail($email);
      
         if ($result['status'] === 'error') {
             $this->error(500, 'Erro ao registrar usuário');
         }
-
+        $usuario = (object) [
+            'id' => $result['data'][0]->id,
+            'name' => $result['data'][0]->name,
+            'email' => $result['data'][0]->email,
+            
+        ];
        
-        $_SESSION["usuario"] = $result['data'][0];
+        $_SESSION["usuario"] = $usuario;
         echo json_encode(['success' => true]);
         exit;
     }

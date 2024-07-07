@@ -13,7 +13,7 @@ class Database {
         }
     }
 
-
+    
 
     protected function getQuery($sql, $params = []) {
         try {
@@ -32,35 +32,7 @@ class Database {
         }
     }
 
-    public function createQuery($sql, $params = []) {
-        try {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($params);
-            
 
-            if (strpos(strtoupper($sql), 'INSERT') === 0) {
-                $lastId = $this->pdo->lastInsertId();
-                $getUserSql = "SELECT * FROM users WHERE id = ?";
-                $getUserStmt = $this->pdo->prepare($getUserSql);
-                $getUserStmt->execute([$lastId]);
-                $user = $getUserStmt->fetchAll(PDO::FETCH_CLASS);
-                return [
-                    "status" => "success",
-                    "data" => $user
-                ];
-            } else {
-                return [
-                    "status" => "success",
-                    "data" => null
-                ];
-            }
-        } catch(PDOException $err) {
-            return [
-                "status" => "error",
-                "data" => $err->getMessage()
-            ];
-        }
-    }
    
 }
 

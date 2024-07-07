@@ -52,7 +52,7 @@ $(document).ready(function() {
                 if (response.success) {
             window.location.href = '/mvcphp/';
         } else {
-            // Handle other responses or errors if needed
+           
         }
             },
             error: function(xhr, status, error) {
