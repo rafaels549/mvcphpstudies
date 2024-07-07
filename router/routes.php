@@ -51,6 +51,22 @@ $routes = [
     '/create/ordem_servico' => [
              'controller'=>'HomeController@store',
              'middleware'=>'auth'
+    ],
+    '/getordensServico' => [
+        'controller'=>'HomeController@ordens',
+        'middleware'=>'auth'
+    ],
+    '/ordem/{id}' => [
+        'controller'=>'HomeController@ordemView', 
+        'middleware' => 'auth'
+    ],
+    '/editOrdem/{id}' => [
+        'controller' => 'HomeController@ordemEdit',
+        'middleware' => 'auth'
+    ],
+    '/deleteOrdem/{id}' => [
+        'controller' => 'HomeController@ordemDelete',
+        'middleware' => 'auth'
     ]
     
 ];

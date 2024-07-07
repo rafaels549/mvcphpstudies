@@ -62,7 +62,7 @@
             $cliente= $clienteModel->findById($id[0])["data"][0];
               
             $this->loadView('cliente', [
-                'title' => 'Clientes',
+                'title' => $cliente->nome,
                 'cliente' => $cliente
              ]);
            

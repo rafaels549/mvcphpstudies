@@ -11,6 +11,8 @@
         $sql = "SELECT * FROM clientes WHERE id = ?";
         return $this->getQuery($sql, [$id]);
     }
+
+
         
     public function createCliente($nome, $documento, $telefone, $endereco) {
      
