@@ -50,7 +50,7 @@
         
       $.ajax({
         url: '/mvcphp/editCliente/' + idCliente,
-        type: 'POST',
+        type: 'PUT',
         data: formData,
         success: function(response) {
           console.log(response)

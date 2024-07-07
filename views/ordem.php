@@ -43,7 +43,7 @@
 
        
         $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: '/mvcphp/editOrdem/<?php echo $ordemServico->id; ?>',
             data: formData,
             dataType: 'json', 

@@ -26,5 +26,5 @@ CREATE TABLE IF NOT EXISTS `ordem_servico` (
    `cliente_id` int UNSIGNED NOT NULL,
    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
    PRIMARY KEY (`id`),
-   FOREIGN KEY (`cliente_id`) REFERENCES `clientes`(`id`)
+   FOREIGN KEY (`cliente_id`) REFERENCES `clientes`(`id`) ON DELETE CASCADE
 );

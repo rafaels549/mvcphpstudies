@@ -1,5 +1,7 @@
 <!-- home.php -->
-<?php include 'layouts/header.php'; ?>
+<?php include 'layouts/header.php'; 
+      include 'layouts/deleteModal.php'
+?>
 
 <div class="container mx-auto mt-4">
     <h1 class="text-4xl font-extrabold dark:text-white p-5"><?php echo $title; ?></h1>
@@ -46,6 +48,10 @@
                     echo '<td class="px-6 py-4">' . $cliente->endereco . '</td>';
                     echo '<td class="px-6 py-4">';
                     echo '<a href="/mvcphp/cliente/' . $cliente->id . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>';
+                    echo "<button type='button' data-cliente-id='" . $cliente->id . "' data-modal-target='popup-modal' data-modal-toggle='popup-modal' class='font-medium text-red-600 dark:text-red-500 hover:underline delete-btn'>Deletar</button>";
+
+
+    
                     echo '</td>';
                     echo '</tr>';
                 }
@@ -53,6 +59,7 @@
             </tbody>
         </table>
     </div>
+ 
 
     <div class="flex justify-center p-10">
         <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
@@ -117,7 +124,38 @@
 
 <script>
 $(document).ready(function() {
+    let clienteId;
 
+
+    $(document).on('click', '.delete-btn', function() {
+        
+        clienteId = $(this).data('cliente-id');
+        
+        
+       
+    });
+
+    $("#confirmDeleteBtn").click(function(){
+    
+        $.ajax({
+            type: 'DELETE',
+            url: '/mvcphp/deleteCliente/' + clienteId,
+            dataType: 'json',
+            success: function(response) {
+                console.log(response)
+                if (response.success) {
+                    $('#triggerDeleteModal2').click();
+                    carregarClientes();
+                } else {
+                    alert('Erro ao deletar ordem de serviço.'); 
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Erro na requisição:', error);
+                alert('Erro ao processar a requisição.');
+            }
+        });
+    })
     function carregarClientes() {
         $.ajax({
             type: 'GET',

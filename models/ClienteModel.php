@@ -39,6 +39,12 @@
     
         return $this->getQuery($sql, $params);
     }
+
+    public function deleteById($id){
+        $sql = "DELETE FROM clientes WHERE id = ?";
+        $params = [$id];
+        return $this->getQuery($sql, $params);
+    }
     private function isCNPJ($documento) {
      
         $documento = preg_replace('/[^0-9]/', '', $documento);

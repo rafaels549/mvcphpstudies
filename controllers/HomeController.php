@@ -45,12 +45,13 @@ class HomeController extends RenderView
   }
 
   public function ordemEdit($id){
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+      parse_str(file_get_contents("php://input"), $_PUT);
       $ordemModel = new OrdemServicoModel();
       $id_ordem = $id[0];
-      $id_cliente= $_POST['cliente'] ?? null;
-      $descricao = $_POST['descricao'] ?? null;
-      $orcamento= $_POST['orcamento'] ?? null;
+      $id_cliente= $_PUT['cliente'] ?? null;
+      $descricao = $_PUT['descricao'] ?? null;
+      $orcamento= $_PUT['orcamento'] ?? null;
       $result = $ordemModel->updateOrdemServico($id_ordem, $id_cliente, $descricao, $orcamento);
       if($result){
         echo json_encode(['success' => true, 'message' => 'Cliente criado com sucesso']);

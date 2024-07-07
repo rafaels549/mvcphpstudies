@@ -29,12 +29,12 @@
               echo json_encode($response);
           }
        public function editCliente($id){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                 
-            $nome = $_POST['nome'] ?? null;
-            $cpf_cnpj = $_POST['cpf_cnpj'] ?? null;
-            $telefone = $_POST['telefone'] ?? null;
-            $endereco = $_POST['endereco'] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                 parse_str(file_get_contents("php://input"), $_PUT);
+            $nome = $_PUT['nome'] ?? null;
+            $cpf_cnpj = $_PUT['cpf_cnpj'] ?? null;
+            $telefone = $_PUT['telefone'] ?? null;
+            $endereco = $_PUT['endereco'] ?? null;
             
           
             $clienteModel = new ClienteModel();
@@ -67,6 +67,19 @@
              ]);
            
         }
+        public function clienteDelete($id){
+            if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
+                         $clienteModel = new ClienteModel();
+                        
+                        $result = $clienteModel->deleteById($id[0]);
+
+                        if($result){
+                            echo json_encode(['success' => true, 'message' => 'Cliente criado com sucesso', 'data' => $result, 'id'=>$id[0]]);
+                          }else{
+                            echo json_encode(['success' => false, 'message' => 'Erro ao criar cliente']);
+                          }
+            }
+      }
         public function store() {
           
               if ($_SERVER['REQUEST_METHOD'] === 'POST') {

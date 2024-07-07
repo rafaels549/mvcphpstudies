@@ -63,7 +63,7 @@
                 dataType: 'json', // Tipo de dados esperado na resposta
                 success: function(response) {
                     if (response.success) {
-                        window.location.href = '/mvcphp/'
+                        window.location.href = '/mvcphp/home'
                     } else {
                         alert('Erro ao registrar usuário: ' + response.message); // Exibe mensagem de erro
                     }
