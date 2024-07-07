@@ -6,7 +6,7 @@ class HomeController extends RenderView
     $users =  new UserModel();
 
     $this->loadView('home', [
-       'title' => 'Home Page',
+       'title' => 'Ordens de Serviço',
        'users' => $users->fetchAllUsers()['data']
     ]);
     }

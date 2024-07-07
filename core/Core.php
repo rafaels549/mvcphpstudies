@@ -25,7 +25,7 @@ class Core {
                 
                 if ($middleware === 'guest') {
                     if ($this->checkAuth()) {
-                        $this->redirect('/mvcphp/'); 
+                        $this->redirect('/mvcphp/home'); 
                         return;
                     }
                 }

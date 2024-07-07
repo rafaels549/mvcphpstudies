@@ -24,8 +24,8 @@ public function findByEmail($email) {
 
 public function createUser($username, $name, $email, $password) {
   $now = date('Y-m-d H:i:s');
-  $sql = "INSERT INTO users (username, name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
-  $params = [$username, $name, $email, $password, $now, $now];
+  $sql = "INSERT INTO users (username, name, email, password, created_at) VALUES (?, ?, ?, ?, ?)";
+  $params = [$username, $name, $email, $password, $now];
   return $this->getQuery($sql, $params);
 }
 }

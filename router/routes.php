@@ -1,7 +1,7 @@
 <?php 
 
 $routes = [
-    '/' => [
+    '/home' => [
         'controller' => 'HomeController@index',
         'middleware' => 'auth' 
     ],
@@ -25,8 +25,16 @@ $routes = [
         'controller' => 'AuthController@register',
         'middleware' => 'guest' 
     ],
-    '/create/cliente' => [
-          'controller' => 'ClienteController@create',
+    '/clientes' => [
+          'controller' => 'ClienteController@index',
           'middleware'=>'auth'
+    ],
+    '/create/cliente' => [
+      'controller' => 'ClienteController@store',
+      'middleware' => 'auth'
+    ],
+    '/getclientes' => [
+        'controller' => 'ClienteController@clientes',
+         'middleware' => 'auth'
     ]
 ];
