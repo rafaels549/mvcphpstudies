@@ -50,7 +50,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-            window.location.href = '/mvcphp/';
+            window.location.href = '/mvcphp/home';
         } else {
            
         }

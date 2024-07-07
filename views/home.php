@@ -25,21 +25,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Cliente</a>
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                    </td>
-                </tr>
+          <?php  foreach ($ordens_servico as $ordem_servico) {
+                    echo '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">';
+                    echo '<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">' . $ordem_servico->descricao_ordem_servico . '</td>';
+                    
+                    
+                    if ($ordem_servico->cliente_cpf !== null) {
+                        echo '<td class="px-6 py-4">' . $ordem_servico->cliente_cpf . $ordem_servico->nome_cliente . $ordem_servico->cliente_telefone .'</td>';
+                    } elseif ($cliente->cliente_cnpj !== null) {
+                        echo '<td class="px-6 py-4">' . $ordem_servico->cliente_cnpj . '</td>';
+                    } else {
+                        echo '<td class="px-6 py-4"></td>'; // Tratamento para caso não haja CPF/CNPJ definido
+                    }
+        
+                    echo '<td class="px-6 py-4">' . $ordem_servico->orcamento. '</td>';
+                   
+                    echo '<td class="px-6 py-4">';
+                    echo '<a href="/mvcphp/cliente/' . $ordem_servico->cliente_id . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar Ordem de Servico</a>';
+                    echo '</td>';
+                 
+                    echo '</tr>';
+                }
+                ?>
+             
+             
 
             </tbody>
         </table>
@@ -72,26 +81,27 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form class="p-4 md:p-5">
+                <form id="formulario" class="p-4 md:p-5">
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecione um cliente</label>
-                            <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select id="countries" name="cliente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Selecione um Cliente</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
+                                <?php foreach ($clientes as $cliente) { ?>
+        <option value="<?php echo htmlspecialchars($cliente->id); ?>">
+            <?php echo htmlspecialchars($cliente->nome); ?>
+        </option>
+    <?php } ?>
                             </select>
                         </div>
                         <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Orçamento</label>
-                        <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
+                        <input type="number" name="orcamento" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
                     </div>
                        
                         <div class="col-span-2">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
-                            <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descrição da Ordem de Serviço"></textarea>
+                            <textarea id="description" name="descricao" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descrição da Ordem de Serviço"></textarea>
                         </div>
                     </div>
                     <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -109,3 +119,70 @@
 </div>
 
 <?php include 'layouts/footer.php'; ?>
+
+<script>
+
+function carregarOrdemServico() {
+        $.ajax({
+            type: 'GET',
+            url: '/mvcphp/getclientes',
+            success: function(response) {
+                console.log(response)
+                if (response.success) {
+                    var clientes = response.clientes;
+                    var tbody = $('#tableClientes tbody');
+                    tbody.empty(); 
+
+                 
+                    clientes.forEach(function(cliente) {
+                        var tr = '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">';
+                        tr += '<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">' + cliente.nome + '</td>';
+                        if (cliente.cpf) {
+                            tr += '<td class="px-6 py-4">' + cliente.cpf + '</td>';
+                        } else {
+                            tr += '<td class="px-6 py-4">' + cliente.cnpj + '</td>';
+                        }
+                        tr += '<td class="px-6 py-4">' + cliente.telefone + '</td>';
+                        tr += '<td class="px-6 py-4">' + cliente.endereco + '</td>';
+                        tr += '<td class="px-6 py-4">';
+                        tr += '<a href="/mvcphp/edit/' + cliente.id + '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>';
+                        tr += '</td>';
+                        tr += '</tr>';
+                        tbody.append(tr); 
+                    });
+                } else {
+                    console.error('Erro ao carregar clientes:', response.clientes);
+                   
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText)
+                console.error('Erro na requisição:', error);
+            }
+        });
+    }
+
+    $('#formulario').submit(function(event) {
+        event.preventDefault(); 
+        
+        var formData = $(this).serialize(); 
+        
+        $.ajax({
+            type: 'POST',
+            url: '/mvcphp/create/ordem_servico',
+            data: formData,
+            success: function(response) {
+                console.log('Resposta do servidor:', response);
+              
+              
+                $('#formulario')[0].reset();
+                
+                
+            },
+            error: function(xhr, status, error) {
+                console.error('Erro na requisição:', error);
+            }
+        });
+    });
+
+</script>

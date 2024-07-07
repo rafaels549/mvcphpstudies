@@ -15,7 +15,7 @@
         public function clientes() {
               $clienteModel = new ClienteModel();
               $clientes = $clienteModel->fetchAllClientes()['data']; 
-          
+        
            
               $response = [
                   'success' => true,
@@ -28,8 +28,45 @@
            
               echo json_encode($response);
           }
-       
-
+       public function editCliente($id){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                 
+            $nome = $_POST['nome'] ?? null;
+            $cpf_cnpj = $_POST['cpf_cnpj'] ?? null;
+            $telefone = $_POST['telefone'] ?? null;
+            $endereco = $_POST['endereco'] ?? null;
+            
+          
+            $clienteModel = new ClienteModel();
+            
+      
+            $result = $clienteModel->editCliente($nome, $cpf_cnpj, $telefone, $endereco,$id[0]);
+            
+           
+            if ($result) {
+              
+                echo json_encode(['success' => true, 'message' => 'Cliente criado com sucesso']);
+            } else {
+              
+                echo json_encode(['success' => false, 'message' => 'Erro ao criar cliente']);
+            }
+        } else {
+        
+            http_response_code(405); 
+            echo json_encode(['success' => false, 'message' => 'Método não permitido']);
+        }
+       }
+        public function clienteView($id){
+            $clienteModel = new ClienteModel();
+        
+            $cliente= $clienteModel->findById($id[0])["data"][0];
+              
+            $this->loadView('cliente', [
+                'title' => 'Clientes',
+                'cliente' => $cliente
+             ]);
+           
+        }
         public function store() {
           
               if ($_SERVER['REQUEST_METHOD'] === 'POST') {

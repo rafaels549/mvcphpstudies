@@ -45,7 +45,7 @@
                     echo '<td class="px-6 py-4">' . $cliente->telefone . '</td>';
                     echo '<td class="px-6 py-4">' . $cliente->endereco . '</td>';
                     echo '<td class="px-6 py-4">';
-                    echo '<a href="/mvcphp/edit/' . $cliente->id . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>';
+                    echo '<a href="/mvcphp/cliente/' . $cliente->id . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>';
                     echo '</td>';
                     echo '</tr>';
                 }

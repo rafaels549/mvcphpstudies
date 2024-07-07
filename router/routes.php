@@ -36,5 +36,21 @@ $routes = [
     '/getclientes' => [
         'controller' => 'ClienteController@clientes',
          'middleware' => 'auth'
+    ],
+    '/editCliente/{id}' => [
+         'controller' => 'ClienteController@editCliente',
+         'middleware'=>'auth'
+    ],
+    
+    '/cliente/{id}'=> [
+             'controller' => 'ClienteController@clienteView',
+             'middleware'=>'auth'
+             
+    ],
+
+    '/create/ordem_servico' => [
+             'controller'=>'HomeController@store',
+             'middleware'=>'auth'
     ]
+    
 ];
