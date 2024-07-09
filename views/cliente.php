@@ -47,7 +47,7 @@
 
       var formData = $('#formulario').serialize();
       var idCliente = <?php echo $cliente->id; ?>; 
-        
+      
       $.ajax({
         url: '/mvcphp/editCliente/' + idCliente,
         type: 'PUT',
